@@ -53,12 +53,12 @@ const View = (() => {
 	};
 	const createTmp = (arr) => {
 		let tmp = "";
-        if (arr[i]. completed === false) {
+        if (arr[0].completed === false) {
             arr.forEach((todo) => {
                 tmp += `
                 
                 <div class="todo">
-                    <input class="align value="${todo.title}" inputText" type="text">
+                    <input class="align inputText" value="${todo.title}" type="text" readonly>
                     <svg focusable="false" class="small editbtn"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path></svg>
                     <svg focusable="false" class="small deletebtn"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path></svg>
                     <svg focusable="false" class="small moveRight"><path d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"></path></svg>
@@ -71,7 +71,7 @@ const View = (() => {
                 tmp += `
                 <div class="todo">
                     <svg focusable="false" class="small moveLeft"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg>
-                    <input class="align value="${todo.title}" inputText" type="text">
+                    <input class="align inputText" value="${todo.title}" type="text" readonly>
                     <svg focusable="false" class="small editbtn"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path></svg>
                     <svg focusable="false" class="small deletebtn"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path></svg>
                 </div>
@@ -191,7 +191,7 @@ const Controller = ((model, view) => {
         const inputText = document.querySelector(".inputText");
 		todocontainer.addEventListener("click", (event) => {
 			if (event.target.className === "editbtn") {
-                inputText.classList.add("changeable");
+                inputText.removeAttribute("readonly");
                 inputbox.addEventListener("keyup", (event) => {
                     if (event.key === "Enter" && event.target.value.trim() !== '') {
                         const todo = new model.Todo(event.target.value);
@@ -200,7 +200,7 @@ const Controller = ((model, view) => {
                             console.log(todofromBE);
                             state.todolist = [todofromBE, ...state.todolist];
                         });
-                        inputText.classList.remove("changeable");
+                        inputText.setAttribute("readonly", "readonly");
                     }
                 });
 			}
